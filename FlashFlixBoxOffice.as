@@ -8,7 +8,7 @@ package
 	
 	public class FlashFlixBoxOffice extends MovieClip
 	{
-		public static const NUMBER_OF_MOVIES: int = 18;
+		public static const NUMBER_OF_MOVIES: int = 10;
 		
 		//var url: String;
 		//var urlLoader: URLLoader = new URLLoader();
@@ -20,7 +20,7 @@ package
 		var counter: int = 0;
 		var movieObject: MovieClip;
 		var startNumber:int = 4;
-		
+				
 		
 		public function FlashFlixBoxOffice()
 		{
@@ -30,9 +30,7 @@ package
 			addChild(homePage);
 			loadConfigFromUrl();
 		}
-		
-		
-				
+						
 		public function loadConfigFromUrl(): void {
 			var urlRequest: URLRequest = new URLRequest("http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=6psypq3q5u3wf9f2be38t5fd&limit=" + NUMBER_OF_MOVIES);
 			
@@ -59,8 +57,7 @@ package
 			trace("The movie title is: " + data.movies[0].title + ", Rated: " + data.movies[0].mpaa_rating + " Critic's Score: " + data.movies[0].ratings.critics_score + " Audience Score: " + data.movies[0].ratings.audience_score + ", Image: " + data.movies[0].posters.profile);
 			//trace("The movie title is: " + data.movies[1].title + ", Rated: " + data.movies[0].mpaa_rating + " Critic's Score: " + data.movies[1].ratings.critics_score + ", Image: " + data.movies[0].posters.profile);
 			//All fields from JSON are accessible by theit property names here/
-			
-			
+						
 			for (var i: int = 0; i < NUMBER_OF_MOVIES; i++) {
 				movieObject = new movieObject_mc;
 				movieArray[i] = movieObject;
@@ -73,15 +70,14 @@ package
 				movieArray[i].releaseDate = data.movies[i].release_dates.theater;
 				movieArray[i].mpaaRating = data.movies[i].mpaa_rating;
 				movieArray[i].runtime = data.movies[i].runtime;
-				movieObject.x = 10+(10 + movieObject.width) * i;
-				movieObject.y = 70;
+				movieObject.x = 20+(18 + movieObject.width) * i;
+				movieObject.y = 250;
 				my_loader.load(new URLRequest(movieArray[i].smallMovieCover));
 				addChild(movieObject);
 				movieArray[i].addEventListener(MouseEvent.CLICK, movieClick);
 				//movieObject.addChild(my_loader);
 			}
-			
-			
+						
 			loadImage();
 			/*my_loader.load(new URLRequest(movieArray[0].poster));
 			my_loader2.load(new URLRequest(movieArray[1].poster));
@@ -112,7 +108,7 @@ package
 		}
 		
 		public function movieClick(e: MouseEvent): void {
-			//trace(e.target.movieTitle);
+			trace(e.target.movieTitle);
 			my_loader.load(new URLRequest(e.target.largeMovieCover));
 			homePage.movieBio.movieTitle.text = e.target.movieTitle;
 			homePage.movieBio.criticsConsensus.text = e.target.criticConsensus;
