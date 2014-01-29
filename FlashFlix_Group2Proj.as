@@ -12,11 +12,18 @@
 		{
 			homestage.x = 0;
 			homestage.y = 0;
-			
+			addChild(homestage);
+			//var login:login_mc = new login_mc();
 			//var boxOffice:FlashFlixBoxOffice = new FlashFlixBoxOffice();
 			//addChild(boxOffice);
 			
+			/*var login:login_mc = new login_mc;
+			login.x = 700;
+			login.y = 500;*/
 			
+			
+			var login:Login = new Login();
+			homestage.addChild(login);
 		}
 	}
 }
