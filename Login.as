@@ -53,9 +53,9 @@
 		
 		public function onLoginComplete(e:Event){
 			
-			trace(e.target.data);
+			//trace(e.target.data);
 			var responseVariables:URLVariables = new URLVariables(e.target.data);
-			trace(responseVariables.success);
+			//trace(responseVariables.success);
 			
 			if(responseVariables.success == "true"){
 				trace("Login Complete");
