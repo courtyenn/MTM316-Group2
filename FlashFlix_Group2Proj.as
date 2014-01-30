@@ -1,4 +1,4 @@
-package
+﻿package
 {
 	import flash.display.MovieClip;
 	
@@ -6,13 +6,24 @@ package
 	
 	public class FlashFlix_Group2Proj extends MovieClip
 	{
-		
+		var homestage:MovieClip = new homePage_mc;
 		
 		public function FlashFlix_Group2Proj()
 		{
-			var boxOffice:FlashFlixBoxOffice = new FlashFlixBoxOffice();
-			addChild(boxOffice);
+			homestage.x = 0;
+			homestage.y = 0;
+			addChild(homestage);
+			//var login:login_mc = new login_mc();
+			//var boxOffice:FlashFlixBoxOffice = new FlashFlixBoxOffice();
+			//addChild(boxOffice);
 			
+			/*var login:login_mc = new login_mc;
+			login.x = 700;
+			login.y = 500;*/
+			
+			
+			var login:Login = new Login();
+			homestage.addChild(login);
 		}
 	}
 }
