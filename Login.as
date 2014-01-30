@@ -14,11 +14,10 @@
 		var login:login_mc = new login_mc;
 		public function Login() {
 			
-			login.y = 500;
-			login.x = 700;
+			login.y = 0;
+			login.x = 0;
 			
 			this.addChild(login);
-			trace(login.login_btn2);
 			login.login_btn2.addEventListener(MouseEvent.CLICK, loginUser);
 		}
 		
