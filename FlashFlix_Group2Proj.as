@@ -21,8 +21,12 @@
 			login.x = 700;
 			login.y = 500;*/
 			
+			var signup:createuser = new createuser();
+			createuser.visible = false;
+			signup.addChild(createuser);
 			
 			var login:Login = new Login();
+			login.visible = true;
 			homestage.addChild(login);
 		}
 	}
