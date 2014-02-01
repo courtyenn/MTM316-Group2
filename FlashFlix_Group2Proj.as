@@ -7,27 +7,46 @@
 	public class FlashFlix_Group2Proj extends MovieClip
 	{
 		var homestage:MovieClip = new homePage_mc;
-		
+		var login:Login;
+		var signup:createuser;
+		var lastmc:MovieClip;
 		public function FlashFlix_Group2Proj()
 		{
 			homestage.x = 0;
 			homestage.y = 0;
 			addChild(homestage);
-			//var login:login_mc = new login_mc();
-			//var boxOffice:FlashFlixBoxOffice = new FlashFlixBoxOffice();
-			//addChild(boxOffice);
+			/*
+			var boxOffice:FlashFlixBoxOffice = new FlashFlixBoxOffice();
+			addChild(boxOffice);*/
 			
 			/*var login:login_mc = new login_mc;
-			login.x = 700;
-			login.y = 500;*/
+			login.x = 0;
+			login.y = 0;*/
 			
-			var signup:createuser = new createuser();
-			createuser.visible = false;
-			signup.addChild(createuser);
+			signup = new createuser(this);
+			signup.visible = false;
+			homestage.addChild(signup);
 			
-			var login:Login = new Login();
+			login = new Login(this);
 			login.visible = true;
 			homestage.addChild(login);
+		}
+		
+		public function register(){
+			lastmc = login;
+			login.visible =false;
+			signup.visible =true;
+		}
+		
+		public function goback(){
+			login.visible =false;
+			signup.visible = false;
+			lastmc.visible = true;
+		}
+		
+		public function comingSoon(){
+			var cmgsoon:Homepage = new Homepage(this);
+			homestage.addChild(cmgsoon);
 		}
 	}
 }

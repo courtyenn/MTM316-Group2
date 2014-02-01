@@ -12,17 +12,19 @@
 		var urlRequest:URLRequest;
 		var path:String = "http://localhost:1337/code/test/MTM316-Group2/";
 		var register:register_mc = new register_mc;
+		var manager:FlashFlix_Group2Proj;
 		
-		public function createuser() {
+		
+		public function createuser(proj:FlashFlix_Group2Proj) {
 			
-			
+			manager = proj;
 			this.addChild(register);
 			register.goback_btn2.addEventListener(MouseEvent.CLICK, goBack);
 			register.signup_btn.addEventListener(MouseEvent.CLICK, signup);
 		}
 		
 		public function goBack(e:Event){
-			register.visible = false;
+			manager.goback();
 		}
 		
 		public function signup(e:Event){
@@ -56,6 +58,9 @@
 			loader.addEventListener(Event.COMPLETE, onRegisterComplete);
 			loader.dataFormat = URLLoaderDataFormat.TEXT;
 			loader.load(request);
+			}
+			else{
+				trace("Incorrect pass");
 			}
 		}
 		
