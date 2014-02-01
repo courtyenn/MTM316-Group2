@@ -15,13 +15,6 @@
 			homestage.x = 0;
 			homestage.y = 0;
 			addChild(homestage);
-			/*
-			var boxOffice:FlashFlixBoxOffice = new FlashFlixBoxOffice();
-			addChild(boxOffice);*/
-			
-			/*var login:login_mc = new login_mc;
-			login.x = 0;
-			login.y = 0;*/
 			
 			signup = new createuser(this);
 			signup.visible = false;
@@ -46,7 +39,10 @@
 		
 		public function comingSoon(){
 			var cmgsoon:Homepage = new Homepage(this);
-			homestage.addChild(cmgsoon);
+			homestage.addChild(cmgsoon);	
+			
+			var boxOffice:FlashFlixBoxOffice = new FlashFlixBoxOffice();
+			homestage.addChild(boxOffice);
 		}
 	}
 }
