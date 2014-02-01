@@ -10,15 +10,19 @@
 		var url: String;
 		var urlVariables:URLVariables = new URLVariables;
 		var urlRequest:URLRequest;
-		var path:String = "http://localhost/MTM316-Group2/";
+		var path:String = "http://localhost:1337/code/test/MTM316-Group2/";
 		var login:login_mc = new login_mc;
-		public function Login() {
-			
+		var register:SimpleButton;
+		var manager:FlashFlix_Group2Proj;
+		public function Login(proj:FlashFlix_Group2Proj){
+			manager = proj;
 			login.y = 0;
 			login.x = 0;
 			
 			this.addChild(login);
+			register = login.register_btn;
 			login.login_btn2.addEventListener(MouseEvent.CLICK, loginUser);
+			register.addEventListener(MouseEvent.CLICK, registerUser);
 		}
 		
 		public function loginUser(e:Event){
@@ -58,10 +62,16 @@
 			
 			if(responseVariables.success == "true"){
 				trace("Login Complete");
+				this.visible = false;
+				manager.comingSoon();
 			}
 			else{
 				trace('fail');
 			}
+		}
+		
+		public function registerUser(e:Event){
+			manager.register();
 		}
 
 	}

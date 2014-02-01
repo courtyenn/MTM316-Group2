@@ -1,12 +1,28 @@
 <?php require_once("includes/connection.php");
 
-$sql = 'INSERT INTO user '.
-       '(username, fname, lname, password) '.
-       'VALUES ( "thawkins", "Trevor", "Hawkins", "12345")';
 
-if(!mysqli_query($conn, $sql)){
-	die('Error: ' . mysqli_error($conn));
+if(isset($_POST['username']))
+{
+	$username = $_POST['username'];
+	$password = $_POST['password'];
+	$fname = $_POST['fname'];
+	$lname = $_POST['lname'];
+
+	$sql = "INSERT INTO user(username, fname, lname, password)
+	VALUES ( 
+		'{$username}', '{$fname}', '{$lname}', '{$password}'
+		)";
+
+	$check = mysqli_query($conn, $sql);
+	if($check){
+	echo $username . " , " . $password . " : " . $fname . " : " . $lname;
+	}
+	else{
+	echo "connection error";
+	}
 }
-echo "Entered data successfully\n";
+else{
+	echo "username is null";
+}
 mysqli_close($conn);
 ?>
