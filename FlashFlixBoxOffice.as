@@ -1,20 +1,28 @@
 package
 {
+	import flash.display.Loader;
 	import flash.display.MovieClip;
-	import flash.events.*;
-	import flash.net.*;
-	import flash.xml.*;
-	import flash.display.*;
+	import flash.display.SimpleButton;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
+	
+	import FlashFlix_Group2Proj;
 	
 	public class FlashFlixBoxOffice extends MovieClip
 	{
-		public static const NUMBER_OF_MOVIES: int = 10;
+		public static const NUMBER_OF_MOVIES: int = 50;
 		
 		//var url: String;
 		//var urlLoader: URLLoader = new URLLoader();
 		var my_loader: Loader = new Loader();
 		
-		var homePage: MovieClip;
+		var movieDisplay: MovieClip;
+		var movieBio: MovieClip;
+		var rightButton:SimpleButton;
+		var leftButton:SimpleButton;
+		
 		var movieArray: Array = [];
 		var loadedArray: Array = new Array();
 		var counter: int = 0;
@@ -24,16 +32,32 @@ package
 		
 		public function FlashFlixBoxOffice()
 		{
-			homePage = new homePage_mc;
-			homePage.x = 0;
-			homePage.y = 0;
-			addChild(homePage);
+			
+			movieDisplay = new movieDisplay_mc;
+			//movieDisplay.x = 0;
+			//movieDisplay.y = 200;
+			addChild(movieDisplay);
+			movieBio = new movieBio_mc;
+			movieBio.x = 100;
+			movieBio.y = 600;
+			addChild(movieBio);
+			leftButton = new leftButton_mc();
+			leftButton.y = 300;
+			addChild(leftButton);
+			leftButton.addEventListener(MouseEvent.CLICK, scrollLeft);
+			rightButton = new rightButton_mc();
+			rightButton.x = 1250;
+			rightButton.y = 300;
+			addChild(rightButton);
+			rightButton.addEventListener(MouseEvent.CLICK, scrollRight);
+			//addChild(rightButton);
+			//movieDisplay = FlashFlix_Group2Proj.homestage;
 			loadConfigFromUrl();
 		}
 						
 		public function loadConfigFromUrl(): void {
-			var urlRequest: URLRequest = new URLRequest("http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=6psypq3q5u3wf9f2be38t5fd&limit=" + NUMBER_OF_MOVIES);
-			
+			var urlRequest: URLRequest = new URLRequest("http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=6psypq3q5u3wf9f2be38t5fd&limit=" + NUMBER_OF_MOVIES+"&nocache=" + new Date().getTime());
+			//var urlRequest: URLRequest = new URLRequest("http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey=6psypq3q5u3wf9f2be38t5fd&nocache=" + new Date().getTime());
 			var urlLoader: URLLoader = new URLLoader();
 			urlLoader.addEventListener(Event.COMPLETE, completeHandler);
 			
@@ -44,9 +68,20 @@ package
 			}
 		}
 		
+		public function scrollRight(event:Event){
+			movieDisplay.x -=300;
+			
+		}
+		
+		public function scrollLeft(event:Event){
+			movieDisplay.x +=300;
+			
+		}
+		
 		public function completeHandler(event: Event): void {
 			var stringJSON: String;
 			stringJSON = String(event.target.data);
+			//trace(stringJSON);
 			//trace(stringJSON);
 			
 			//var loader: URLLoader = URLLoader(event.target);
@@ -54,7 +89,7 @@ package
 			
 			var data: Object = JSON.parse(stringJSON);
 			//trace(data);
-			trace("The movie title is: " + data.movies[0].title + ", Rated: " + data.movies[0].mpaa_rating + " Critic's Score: " + data.movies[0].ratings.critics_score + " Audience Score: " + data.movies[0].ratings.audience_score + ", Image: " + data.movies[0].posters.profile);
+			//trace("The movie title is: " + data.movies[0].title + ", Rated: " + data.movies[0].mpaa_rating + " Critic's Score: " + data.movies[0].ratings.critics_score + " Audience Score: " + data.movies[0].ratings.audience_score + ", Image: " + data.movies[0].posters.profile);
 			//trace("The movie title is: " + data.movies[1].title + ", Rated: " + data.movies[0].mpaa_rating + " Critic's Score: " + data.movies[1].ratings.critics_score + ", Image: " + data.movies[0].posters.profile);
 			//All fields from JSON are accessible by theit property names here/
 						
@@ -66,14 +101,17 @@ package
 				movieArray[i].largeMovieCover = data.movies[i].posters.detailed;
 				movieArray[i].criticScore = data.movies[i].ratings.critics_score;
 				movieArray[i].criticConsensus = data.movies[i].critics_consensus;
+				//movieArray[i].criticConsensus = data.movies[i].critics_consensus;
 				movieArray[i].audienceScore = data.movies[i].ratings.audience_score;
 				movieArray[i].releaseDate = data.movies[i].release_dates.theater;
 				movieArray[i].mpaaRating = data.movies[i].mpaa_rating;
 				movieArray[i].runtime = data.movies[i].runtime;
-				movieObject.x = 20+(18 + movieObject.width) * i;
-				movieObject.y = 250;
+				movieObject.x = 20+(19 + movieObject.width) * i;
+				movieObject.y = 100;
+				//movieDisplay.x = 20+(19 + movieObject.width) * i;
+				movieDisplay.y = 10;
 				my_loader.load(new URLRequest(movieArray[i].smallMovieCover));
-				addChild(movieObject);
+				movieDisplay.addChild(movieObject);
 				movieArray[i].addEventListener(MouseEvent.CLICK, movieClick);
 				//movieObject.addChild(my_loader);
 			}
@@ -108,18 +146,19 @@ package
 		}
 		
 		public function movieClick(e: MouseEvent): void {
-			trace(e.target.movieTitle);
+			//trace(e.target.movieTitle);
+			//trace(e.target.largeMovieCover);
 			my_loader.load(new URLRequest(e.target.largeMovieCover));
-			homePage.movieBio.movieTitle.text = e.target.movieTitle;
-			homePage.movieBio.criticsConsensus.text = e.target.criticConsensus;
-			homePage.movieBio.criticScore.text = "Critic Score: "+e.target.criticScore+"%";
-			homePage.movieBio.audienceScore.text = "Audience Score: "+e.target.audienceScore+"%";
-			homePage.movieBio.releaseDate.text = "Release Date: "+e.target.releaseDate;
-			homePage.movieBio.mpaaRating.text = "MPAA Rating: "+e.target.mpaaRating;
-			homePage.movieBio.runtime.text = "Runtime: "+e.target.runtime+" minutes";
+			movieBio.movieTitle.text = e.target.movieTitle;
+			movieBio.criticsConsensus.text = e.target.criticConsensus;
+			movieBio.criticScore.text = "Critic Score: "+e.target.criticScore+"%";
+			movieBio.audienceScore.text = "Audience Score: "+e.target.audienceScore+"%";
+			movieBio.releaseDate.text = "Release Date: "+e.target.releaseDate;
+			movieBio.mpaaRating.text = "MPAA Rating: "+e.target.mpaaRating;
+			movieBio.runtime.text = "Runtime: "+e.target.runtime+" minutes";
 			my_loader.x = 50;
 			my_loader.y = 20;
-			homePage.movieBio.addChild(my_loader);
+			movieBio.addChild(my_loader);
 		}
 	}
 }
