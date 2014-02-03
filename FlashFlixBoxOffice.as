@@ -76,8 +76,10 @@
 		}
 		
 		public function scrollLeft(event:Event){
+			if(movieDisplay.x < 0)
+			{
 			movieDisplay.x +=300;
-			
+			}		
 		}
 		
 		public function completeHandler(event: Event): void {
