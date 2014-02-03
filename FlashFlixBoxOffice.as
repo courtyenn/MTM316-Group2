@@ -1,4 +1,4 @@
-package
+﻿package
 {
 	import flash.display.Loader;
 	import flash.display.MovieClip;
@@ -12,7 +12,7 @@ package
 	
 	public class FlashFlixBoxOffice extends MovieClip
 	{
-		public static const NUMBER_OF_MOVIES: int = 50;
+		public static const NUMBER_OF_MOVIES: int = 38;
 		
 		//var url: String;
 		//var urlLoader: URLLoader = new URLLoader();
@@ -28,26 +28,28 @@ package
 		var counter: int = 0;
 		var movieObject: MovieClip;
 		var startNumber:int = 4;
+		var manager:FlashFlix_Group2Proj;
 				
 		
-		public function FlashFlixBoxOffice()
+		public function FlashFlixBoxOffice(proj:FlashFlix_Group2Proj)
 		{
-			
+			manager = proj;
+			var ydistance = 550;
 			movieDisplay = new movieDisplay_mc;
 			//movieDisplay.x = 0;
-			//movieDisplay.y = 200;
+			movieDisplay.y = 260;
 			addChild(movieDisplay);
 			movieBio = new movieBio_mc;
-			movieBio.x = 100;
+			movieBio.x = 0;
 			movieBio.y = 600;
 			addChild(movieBio);
 			leftButton = new leftButton_mc();
-			leftButton.y = 300;
+			leftButton.y = ydistance;
 			addChild(leftButton);
 			leftButton.addEventListener(MouseEvent.CLICK, scrollLeft);
 			rightButton = new rightButton_mc();
 			rightButton.x = 1250;
-			rightButton.y = 300;
+			rightButton.y = ydistance;
 			addChild(rightButton);
 			rightButton.addEventListener(MouseEvent.CLICK, scrollRight);
 			//addChild(rightButton);
@@ -96,6 +98,7 @@ package
 			for (var i: int = 0; i < NUMBER_OF_MOVIES; i++) {
 				movieObject = new movieObject_mc;
 				movieArray[i] = movieObject;
+				movieArray[i].movieid = data.movies[i].id;
 				movieArray[i].movieTitle = data.movies[i].title;
 				movieArray[i].smallMovieCover = data.movies[i].posters.profile;
 				movieArray[i].largeMovieCover = data.movies[i].posters.detailed;
@@ -113,7 +116,10 @@ package
 				my_loader.load(new URLRequest(movieArray[i].smallMovieCover));
 				movieDisplay.addChild(movieObject);
 				movieArray[i].addEventListener(MouseEvent.CLICK, movieClick);
+				movieArray[i].watch_btn.addEventListener(MouseEvent.CLICK, alreadyWatched);
+				movieArray[i].want_btn.addEventListener(MouseEvent.CLICK, wantToWatch);
 				//movieObject.addChild(my_loader);
+				MovieManager.getInstance().addComingSoonCache(movieArray[i].movieid, movieArray[i]);
 			}
 						
 			loadImage();
@@ -137,6 +143,7 @@ package
 				
 				for (var i: uint = 0; i < loadedArray.length; i++) {
 					loadedArray[i].x = 0;
+					loadedArray[i].y = 200;
 					movieArray[i].addChild(loadedArray[i]);
 				}
 			} else {
@@ -145,20 +152,32 @@ package
 			}
 		}
 		
-		public function movieClick(e: MouseEvent): void {
+		public function movieClick(e:Event): void {
 			//trace(e.target.movieTitle);
 			//trace(e.target.largeMovieCover);
+			MovieManager.getInstance();
 			my_loader.load(new URLRequest(e.target.largeMovieCover));
-			movieBio.movieTitle.text = e.target.movieTitle;
+			movieBio.movieTitle.text = e.target.movieTitle + " ("+ e.target.releaseDate + ")";
 			movieBio.criticsConsensus.text = e.target.criticConsensus;
 			movieBio.criticScore.text = "Critic Score: "+e.target.criticScore+"%";
 			movieBio.audienceScore.text = "Audience Score: "+e.target.audienceScore+"%";
-			movieBio.releaseDate.text = "Release Date: "+e.target.releaseDate;
+			movieBio.mpaaRating.text = e.target.mpaaRating;
+			movieBio.runtime.text = e.target.runtime+" minutes";
+			/*movieBio.releaseDate.text = "Release Date: "+e.target.releaseDate;
 			movieBio.mpaaRating.text = "MPAA Rating: "+e.target.mpaaRating;
-			movieBio.runtime.text = "Runtime: "+e.target.runtime+" minutes";
+			movieBio.runtime.text = "Runtime: "+e.target.runtime+" minutes";*/
 			my_loader.x = 50;
 			my_loader.y = 20;
 			movieBio.addChild(my_loader);
+		}
+		
+		public function wantToWatch(e:Event):void {
+			trace("I want to watch this");
+			MovieManager.getInstance().addMWantWatch(manager.getUserID(), e.target.parent.movieid);
+		}
+		public function alreadyWatched(e:Event):void{
+			trace("I've already watched this, lets rate it");
+			MovieManager.getInstance().addMWatched(manager.getUserID(),e.target.parent.movieid);
 		}
 	}
 }

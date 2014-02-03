@@ -63,7 +63,7 @@
 			if(responseVariables.success == "true"){
 				trace("Login Complete");
 				this.visible = false;
-				manager.comingSoon();
+				manager.comingSoon(responseVariables.userId);
 			}
 			else{
 				trace('fail');

@@ -13,6 +13,11 @@
 			manager = proj;
 			
 			this.addChild(home);
+			home.alreadywatched_btn.addEventListener(MouseEvent.CLICK, onAlreadyWatched);
+		}
+		
+		public function onAlreadyWatched(e:Event):void{
+			manager.switchToAlreadyWatched();
 		}
 
 	}

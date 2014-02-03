@@ -10,8 +10,12 @@
 		var login:Login;
 		var signup:createuser;
 		var lastmc:MovieClip;
+		var userId:Number;
+		var boxOffice:FlashFlixBoxOffice;
 		public function FlashFlix_Group2Proj()
 		{
+		    
+			boxOffice = new FlashFlixBoxOffice(this);
 			homestage.x = 0;
 			homestage.y = 0;
 			addChild(homestage);
@@ -37,12 +41,21 @@
 			lastmc.visible = true;
 		}
 		
-		public function comingSoon(){
+		public function comingSoon(userid:Number){
+			userId = userid;
 			var cmgsoon:Homepage = new Homepage(this);
 			homestage.addChild(cmgsoon);	
 			
-			var boxOffice:FlashFlixBoxOffice = new FlashFlixBoxOffice();
+			
 			homestage.addChild(boxOffice);
+		}
+		
+		public function getUserID():Number{
+			return userId;
+		}
+		
+		public function switchToAlreadyWatched():void{
+			
 		}
 	}
 }
