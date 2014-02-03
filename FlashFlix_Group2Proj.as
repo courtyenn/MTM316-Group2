@@ -27,6 +27,11 @@
 			login = new Login(this);
 			login.visible = true;
 			homestage.addChild(login);
+			
+			var boundary:MovieClip = new boundary_mc;
+			boundary.x = -1430;
+			boundary.y = -1005;
+			addChild(boundary);
 		}
 		
 		public function register(){
