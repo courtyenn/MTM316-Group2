@@ -14,10 +14,21 @@
 			
 			this.addChild(home);
 			home.alreadywatched_btn.addEventListener(MouseEvent.CLICK, onAlreadyWatched);
+			home.wantwatch_btn.addEventListener(MouseEvent.CLICK, onWantToWatch);
+			home.home_btn.addEventListener(MouseEvent.CLICK, goHome);
 		}
 		
 		public function onAlreadyWatched(e:Event):void{
-			manager.switchToAlreadyWatched();
+			
+			manager.switchToAlreadyWatched(e);
+		}
+		
+		public function onWantToWatch(e:Event):void{
+			manager.switchToWantWatch(e);
+		}
+		
+		public function goHome(e:Event){
+			manager.goHome(e);
 		}
 
 	}

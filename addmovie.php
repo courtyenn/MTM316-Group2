@@ -21,8 +21,7 @@ if(isset($_POST['movieId']))
 
 		$sql = "INSERT INTO movie(movieID, title, release_date, mpaa_rating,profile_pic,detail_pic,rottentomato_rating,audience_rating)
 		VALUES ( 
-			'{$movieId}', '{$movieTitle}', '{$releaseDate}', '{$mpaaRating}', '{$smallMovieCover}', '{$largeMovieCover}','{$criticScore}' ,'{$audienceScore}'
-			)";
+			$movieId, '{$movieTitle}', '{$releaseDate}', '{$mpaaRating}', '{$smallMovieCover}', '{$largeMovieCover}','{$criticScore}' ,'{$audienceScore}')";
 
 		$check = mysqli_query($conn, $sql);
 		if($check){
@@ -33,7 +32,7 @@ if(isset($_POST['movieId']))
 		}
 	}
 	else{
-		echo "movie already exists." . mysqli_num_rows($checkquery);
+		echo "movie already exists. ID:" . $movieId;
 	}
 }
 else{

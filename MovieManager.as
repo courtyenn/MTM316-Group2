@@ -62,8 +62,8 @@
 		}
 		
 		public function addMWantWatch(userId:Number, id:Number){
-			trace(dictionary);
-			trace(dictionary[id].movieTitle);
+			addMovie(id);
+			updateWantToWatch(userId, id);
 		}
 		
 		public function onAddMovieComplete(e:Event){
@@ -111,11 +111,7 @@
 			var requestVars:URLVariables = new URLVariables();
 			requestVars.movieId = movieId;
 			requestVars.userId = userId;
-			requestVars.hasWatched = "";
-			requestVars.wantToWatch = "";
-			requestVars.note = "";
-			requestVars.rating = 0;
-			requestVars.isFavorite = "";
+			requestVars.hasWatched = 1;
 			//requestVars['watchedMovie'] = true;
 			
 			request.data = requestVars;
@@ -129,11 +125,33 @@
 		}
 		
 		public function updateWantToWatch(userId:Number, movieId:Number){
+			url = path + "updateusersmovie.php";
 			
+			var request:URLRequest = new URLRequest(url);
+			request.method = URLRequestMethod.POST;
+			
+			var requestVars:URLVariables = new URLVariables();
+			requestVars.movieId = movieId;
+			requestVars.userId = userId;
+			requestVars.wantToWatch = 1;
+			//requestVars['watchedMovie'] = true;
+			
+			request.data = requestVars;
+			
+			var loader:URLLoader = new URLLoader(request);
+			trace(url);
+			
+			loader.addEventListener(Event.COMPLETE, onMovieWantWatchCompleted);
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.load(request);
 		}
 		
 		public function onMovieWatchedCompleted(e:Event){
 		trace(e.target.data);
+		}
+		
+		public function onMovieWantWatchCompleted(e:Event){
+			trace(e.target.data);
 		}
 	}
 	

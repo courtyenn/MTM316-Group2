@@ -173,10 +173,12 @@
 		
 		public function wantToWatch(e:Event):void {
 			trace("I want to watch this");
+			trace(e.target.parent.smallMovieCover);
 			MovieManager.getInstance().addMWantWatch(manager.getUserID(), e.target.parent.movieid);
 		}
 		public function alreadyWatched(e:Event):void{
 			trace("I've already watched this, lets rate it");
+			trace(e.target.parent.smallMovieCover);
 			MovieManager.getInstance().addMWatched(manager.getUserID(),e.target.parent.movieid);
 		}
 	}
