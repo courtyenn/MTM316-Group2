@@ -10,7 +10,7 @@
 		var url: String;
 		var urlVariables:URLVariables = new URLVariables;
 		var urlRequest:URLRequest;
-		var path:String = "http://localhost:1337/code/test/MTM316-Group2/";
+		var path:String = "http://localhost/MTM316-Group2/";
 		var register:register_mc = new register_mc;
 		var manager:FlashFlix_Group2Proj;
 		
