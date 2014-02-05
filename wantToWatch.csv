@@ -1,0 +1,10 @@
+UserID,MovieID,Note,Rating,isFavorite,hasWatched,wantToWatch,ID,title,director,year,mpaa_rating,profile_pic,detail_pic,budget,revenue,tagline,overview,status,release_date,genres,vote_average,vote_count,imdb_rating,rottentomato_rating,moviedb_rating,audience_rating,trailer_url,movieID
+20|25||0|0|1|1|25|"Jack Ryan: Shadow Recruit"|||PG-13|http://content9.flixster.com/movie/11/17/39/11173959_pro.jpg|http://content9.flixster.com/movie/11/17/39/11173959_det.jpg||||||2014-01-17|||||57||63||771314857
+20|26||0|0|1|1|26|"Lone Survivor"|||R|http://content7.flixster.com/movie/11/17/26/11172665_pro.jpg|http://content7.flixster.com/movie/11/17/26/11172665_det.jpg||||||2014-01-10|||||73||90||771356130
+20|27||0|0|0|1|27|"Labor Day"|||PG-13|http://content9.flixster.com/movie/11/17/55/11175503_pro.jpg|http://content9.flixster.com/movie/11/17/55/11175503_det.jpg||||||2014-01-31|||||32||61||770820337
+20|28||0|0|0|1|28|"American Hustle"|||R|http://content6.flixster.com/movie/11/17/44/11174440_pro.jpg|http://content6.flixster.com/movie/11/17/44/11174440_det.jpg||||||2013-12-20|||||93||79||771352406
+20|29||0|0|0|1|29|"I, Frankenstein"|||PG-13|http://content6.flixster.com/movie/11/17/45/11174524_pro.jpg|http://content6.flixster.com/movie/11/17/45/11174524_det.jpg||||||2014-01-24|||||5||51||771257268
+20|30||0|0|0|1|30|"The Nut Job"|||PG|http://content6.flixster.com/movie/11/17/48/11174840_pro.jpg|http://content6.flixster.com/movie/11/17/48/11174840_det.jpg||||||2014-01-17|||||12||52||771354446
+20|31||0|0|0|1|31|Gravity|||PG-13|http://content7.flixster.com/movie/11/17/12/11171277_pro.jpg|http://content7.flixster.com/movie/11/17/12/11171277_det.jpg||||||2013-10-04|||||97||85||771205997
+20|32||0|0|0|1|32|"Dallas Buyers Club"|||R|http://content6.flixster.com/movie/11/17/60/11176064_pro.jpg|http://content6.flixster.com/movie/11/17/60/11176064_det.jpg||||||2013-11-01|||||93||92||771358464
+20|33||0|0|0|1|33|"12 Years a Slave"|||R|http://content6.flixster.com/movie/11/17/32/11173276_pro.jpg|http://content6.flixster.com/movie/11/17/32/11173276_det.jpg||||||2013-10-18|||||96||92||771316210
