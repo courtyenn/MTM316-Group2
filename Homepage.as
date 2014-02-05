@@ -16,6 +16,7 @@
 			home.alreadywatched_btn.addEventListener(MouseEvent.CLICK, onAlreadyWatched);
 			home.wantwatch_btn.addEventListener(MouseEvent.CLICK, onWantToWatch);
 			home.home_btn.addEventListener(MouseEvent.CLICK, goHome);
+			home.settings_btn.addEventListener(MouseEvent.CLICK, switchToSettings);
 		}
 		
 		public function onAlreadyWatched(e:Event):void{
@@ -30,6 +31,12 @@
 		public function goHome(e:Event){
 			manager.goHome(e);
 		}
+		
+		public function switchToSettings(e:Event){
+			manager.switchToSettings(e);
+		}
+		
+	
 
 	}
 	

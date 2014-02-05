@@ -7,7 +7,10 @@ $moviesToReturn = array();
 $variables ="";
 $data = array();
 
-$mquery = "SELECT * FROM `user_movies` WHERE `UserID` = $userId and `wantToWatch` = 1";
+$mquery = "SELECT * FROM `user_movies` LEFT JOIN `movie`" .
+"ON `user_movies`.`MovieID` = `movie`.`ID`". 
+"WHERE `UserID` = $userId and `wantToWatch` = 1";
+
 $movieQuery = mysqli_query($conn, $mquery);
 
 
@@ -15,51 +18,32 @@ if(!$movieQuery){
 	die("Database query failed: ".mysqli_error($conn));
 }
 else{
-if($movieQuery || mysqli_num_rows($movieQuery) != 0){
-	while($row = mysqli_fetch_array($movieQuery)){
-		$variables .= $row['MovieID'];
+	//$num_fields = mysqli_num_fields($movieQuery);	
+	$fields = mysqli_fetch_fields($movieQuery);
+	$head = array();
+	foreach($fields as $field){
+		$head[] = $field->name;
 	}
-	echo var_dump($movieQuery);
-	echo $variables . " helllooo?";
+
+
+	$fp = fopen('file.csv', 'w');
+
+	if($fp && $movieQuery){
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename="export.csv"');
+    header('Pragma: no-cache');
+    header('Expires: 0');
+    fputcsv($fp, $head); 
+    while ($row = $movieQuery->fetch_array(MYSQLI_NUM)) {
+        fputcsv($fp, array_values($row), '|');
+    }
+    die;
 	}
-	else{
-	echo "Nothing";
+	fclose($fp);
 }
-}
-
-
-// for($counter = 0; $counter < sizeof($data); $counter++){
-
-// 	$mquery = "SELECT * from `movie` WHERE `MovieID` = '{$data[$counter]}'";
-// 	$movieQuery = mysqli_query($conn, $mquery);
-// 	$row = mysqli_fetch_array($movieQuery);
-// 	$variables .= 'movieId='.urlencode($row['title']).'&';
-	
-// }
-echo $variables;
 }
 else{
 	echo "User Id is null";
 }
-  
-  
-
-// $count=1;
-
-// while($row = mysql_fetch_array($result)){
-// 	$variables .= 'id'.$count.'='.urlencode($row['id']).'&';
-// 	$variables .= 'fname'.$count.'='.urlencode($row['fname']).'&';
-// 	$variables .= 'lname'.$count.'='.urlencode($row['lname']).'&';
-// 	$variables .= 'password'.$count.'='.urlencode($row['password']).'&';
-// 	$variables .= 'email'.$count.'='.urlencode($row['email']).'&';
-// 	$count++;	
-// }	
-// $variables .= 'end=1&now=1';
-
-// echo $variables;
-
-// if (isset($connection)){
-// 		mysql_close($connection);
-// }
 mysqli_close($conn);
 ?>

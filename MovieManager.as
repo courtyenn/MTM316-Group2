@@ -19,6 +19,7 @@
 		var path:String = "http://localhost:1337/code/test/MTM316-Group2/";
 		var register:register_mc = new register_mc;
 		var manager:FlashFlix_Group2Proj;
+		var myLoader:URLLoader = new URLLoader();
 		
 		public static function getInstance():MovieManager{
 			if (instance == null) {
@@ -141,7 +142,9 @@
 			var loader:URLLoader = new URLLoader(request);
 			trace(url);
 			
-			loader.addEventListener(Event.COMPLETE, onMovieWantWatchCompleted);
+			loader.addEventListener(Event.COMPLETE, function(e:Event):void{
+				trace('done loading want to watch movies');
+			});
 			loader.dataFormat = URLLoaderDataFormat.TEXT;
 			loader.load(request);
 		}
