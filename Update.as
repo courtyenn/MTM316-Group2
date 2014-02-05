@@ -1,23 +1,27 @@
 ﻿package {
-
-	public class Update : MovieClip {
+	import flash.display.MovieClip;
+	import flash.events.*;
+	import flash.net.*;
+	import flash.xml.*;
+	import flash.display.*; 
+	public class Update extends MovieClip {
 		var url:String;
 		var urlVariables:URLVariables = new URLVariables;
 		var path: String = "http://localhost/MTM316-Group2/";
-		var updateUrl:update_mc = new update_mc;
+		var updateUrl = new update_mc;
 		var urlRequest: URLRequest; 
 		
 		public function Update() {
-			deleteUser.y = 0;
-			deleteUser.x = 0;
+			updateUrl.y = 0;
+			updateUrl.x = 0;
 			addChild(updateUrl);
 		}
 		public function UpdateUser() {
 			url = path + "Update.php";
-			urlVariables.username = update_mc.username.text;
-			urlVariables.fname = update_mc.fname.text;
-			urlVariables.lname = update_mc.lname.text;
-			urlVariables.password = update_mc.password.text;
+			urlVariables.username = updateUrl.username.text;
+			urlVariables.fname = updateUrl.fname.text;
+			urlVariables.lname = updateUrl.lname.text;
+			urlVariables.password = updateUrl.password.text;
 
 
 			urlRequest.data = urlVariables;
