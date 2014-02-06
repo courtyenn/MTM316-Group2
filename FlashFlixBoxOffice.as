@@ -111,6 +111,7 @@
 				movieArray[i].releaseDate = data.movies[i].release_dates.theater;
 				movieArray[i].mpaaRating = data.movies[i].mpaa_rating;
 				movieArray[i].runtime = data.movies[i].runtime;
+				movieArray[i].theaterDate = data.movies[i].release_dates.theater.slice(0,4);
 				movieObject.x = 20+(19 + movieObject.width) * i;
 				movieObject.y = 100;
 				//movieDisplay.x = 20+(19 + movieObject.width) * i;
@@ -154,11 +155,47 @@
 			}
 		}
 		
+		function passOMDB(movieName:String, theaterDate:String)
+		{
+			var urlRequest: String = "http://www.omdbapi.com/?t="+movieName+"&y="+theaterDate;
+			var loader: URLLoader = new URLLoader();
+			
+			try
+			{
+				loader.load(new URLRequest(urlRequest));
+				loader.addEventListener(Event.COMPLETE, loadingOMBDData);
+			}
+			catch(error:Error)
+			{
+				trace("Cannot load : " + error.message);
+			}
+		}
+
+		function loadingOMBDData(e:Event):void
+		{
+			var stringJSON: String;
+			stringJSON = String(e.target.data);
+			
+			var data: Object = JSON.parse(stringJSON);
+			
+			//trace(arraySpace);
+			//textbox = data.Metascore;
+			//textbox2 == data.imdbRating;
+			if(data.Metascore != "" || data.Metascore != null)
+			{
+				//homePage.movieBio.metaCritic.text = data.Metascore;
+				//homePage.movieBio.imdbRating.text = data.imdbRating;
+			}
+		}
+		
 		public function movieClick(e:Event): void {
 			//trace(e.target.movieTitle);
 			//trace(e.target.largeMovieCover);
 			MovieManager.getInstance();
 			my_loader.load(new URLRequest(e.target.largeMovieCover));
+			
+			passOMDB(e.target.movieTitle, e.target.theaterDate);
+			
 			movieBio.movieTitle.text = e.target.movieTitle + " ("+ e.target.releaseDate + ")";
 			movieBio.criticsConsensus.text = e.target.criticConsensus;
 			movieBio.criticScore.text = "Critic Score: "+e.target.criticScore+"%";
@@ -177,10 +214,10 @@
 			trace("I want to watch this");
 			trace(e.target.parent.smallMovieCover);
 			MovieManager.getInstance().addMWantWatch(manager.getUserID(), e.target.parent);
+			//MovieManager.getInstance().addMWantWatch(manager.getUserID(), e.target.parent.movieid);
 		}
 		public function alreadyWatched(e:Event):void{
 			trace("I've already watched this, lets rate it");
-			trace(e.target.parent.smallMovieCover);
 			MovieManager.getInstance().addMWatched(manager.getUserID(),e.target.parent.movieid);
 		}
 	}
