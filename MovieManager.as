@@ -56,22 +56,23 @@
 			//trace(id);
 			//trace(dictionary[id]);
 			
-			addMovie(id);
-			updateMovieWatched(userId, id);
+			//addMovie(id);
+			//updateMovieWatched(userId, id);
 			
 			
 		}
 		
-		public function addMWantWatch(userId:Number, id:Number){
-			addMovie(id);
-			updateWantToWatch(userId, id);
+		public function addMWantWatch(userId:Number, movie:movieObject_mc){
+			//trace(movie.movieTitle);
+			addMovie(movie);
+			updateWantToWatch(userId, movie.movieid);
 		}
 		
 		public function onAddMovieComplete(e:Event){
 			trace(e.target.data);
 		}
 		
-		public function addMovie(id:Number){
+		public function addMovie(movie:movieObject_mc){
 			url = path + "addmovie.php";
 
 			var request:URLRequest = new URLRequest(url);
@@ -80,15 +81,17 @@
 			//loader.dataFormat = URLLoaderDataFormat.VARIABLES.toUpperCase();
 			
 			var requestVars:URLVariables = new URLVariables();
-			requestVars.movieId = id;
-			requestVars.mpaaRating = dictionary[id].mpaaRating;
-			requestVars.movieTitle = dictionary[id].movieTitle;
-			requestVars.criticScore = dictionary[id].criticScore;
-			requestVars.audienceScore = dictionary[id].audienceScore;
-			requestVars.runtime = dictionary[id].runtime;
-			requestVars.releaseDate = dictionary[id].releaseDate;
-			requestVars.smallMovieCover = dictionary[id].smallMovieCover;
-			requestVars.largeMovieCover = dictionary[id].largeMovieCover;
+			requestVars.movieId = movie.movieid;
+			requestVars.mpaaRating = movie.mpaaRating;
+			requestVars.movieTitle = movie.movieTitle;
+			requestVars.criticScore = movie.criticScore;
+			requestVars.audienceScore = movie.criticConsensus;
+			requestVars.runtime = movie.runtime;
+			requestVars.releaseDate = movie.releaseDate;
+			requestVars.smallMovieCover = movie.smallMovieCover;
+			requestVars.largeMovieCover = movie.largeMovieCover;
+			requestVars.audienceScore = movie.audienceScore;
+			requestVars.consensus = movie.criticConsensus;
 			requestVars.hasWatched = true;
 			
 			

@@ -79,6 +79,7 @@
 		}
 		
 		public function goHome(e:Event){
+			trace('hello browser');
 			manager.goHome(e);
 		}
 		

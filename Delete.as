@@ -8,37 +8,39 @@
 	public class Delete extends MovieClip {
 		var url: String;
 		var urlVariables: URLVariables = new URLVariables;
-		var path: String = "http://localhost/MTM316-Group2/";
-		var urlRequest: URLRequest;
-		var deleteUr1: delete_mc = new delete_mc;
+		var path: String = "http://localhost:1337/code/test/MTM316-Group2/";
+		var urlRequest:URLRequest;
+		var deleteUrl:delete_mc = new delete_mc;
+		var manager:FlashFlix_Group2Proj;
 
-		public function Delete() {
-			deleteUser.y = 0;
-			deleteUser.x = 0;
+		public function Delete(proj:FlashFlix_Group2Proj) {
+			manager = proj;
+			deleteUrl.y = 0;
+			deleteUrl.x = 0;
 
-			addChild(deleteUr1);
-			deleteUr1.delete_Btn1.addEventListener(MouseEvent.CLICK, deleteUser);
+			addChild(deleteUrl);
+			deleteUrl.delete_Btn1.addEventListener(MouseEvent.CLICK, deleteUser);
 		}
 
 		public function deleteUser(e: Event) {
-			var password1 = deleteUr1.username_txt.text;
-			var password2 = deleteUr1.password_txt.text;
+			var password1 = deleteUrl.username_txt.text;
+			var password2 = deleteUrl.password_txt.text;
 
 			if (password1 == password2) {
-				trace(user deleted);
+				trace("user deleted");
 				url = path + "deleteuser.php";
-
+				urlRequest = new URLRequest(url);
 
 				var requestVars: URLVariables = new URLVariables();
-				requestVars.username = username;
-				requestVars.password = pass;
-
-				var loader: URLLoader = new URLLoader(request);
+				requestVars.id = manager.getUserID();
 
 				trace(url);
 				urlRequest.data = urlVariables;
 				sendToURL(urlRequest);
 
+			}
+			else{
+				trace("Passwords do not match.");
 			}
 
 		}

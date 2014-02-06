@@ -16,6 +16,10 @@
 		var cmgsoon:Homepage;
 		var browsepage:BrowsePage;
 		var settings:settingsmenu_mc;
+		var deleteUser:Delete;
+		var updateUser:Update;
+		var deletePage:delete_mc;
+		var updatePage:update_mc;
 		
 		var browse:infoPage_mc = new infoPage_mc;
 		public function FlashFlix_Group2Proj()
@@ -37,10 +41,18 @@
 			
 			cmgsoon = new Homepage(this);
 			
+			deleteUser = new Delete(this);
+			deleteUser.visible = false;
+			homestage.addChild(deleteUser);
+			
+			updateUser = new Update();
+			updateUser.visible = false;
+			homestage.addChild(updateUser);
+			
 			browse.visible =false;
 			//browse.alreadywatched_btn.addEventListener(MouseEvent.CLICK, switchToAlreadyWatched);
-			//browse.wantwatch_btn.addEventListener(MouseEvent.CLICK, switchToWantWatch);
-			browse.home_btn.addEventListener(MouseEvent.CLICK, goHome);
+			browse.wantwatch_btn.addEventListener(MouseEvent.CLICK, switchToWantWatch);
+			
 			
 			homestage.addChild(browse);
 			
@@ -66,6 +78,11 @@
 			lastmc.visible = true;
 		}
 		
+		public function switchToLogin(){
+			signup.visible = false;
+			login.visible = true;
+		}
+		
 		public function comingSoon(userid:Number){
 			userId = userid;
 			//browsepage = new BrowsePage(this, userid);
@@ -82,9 +99,11 @@
 			settings.exit_btn.addEventListener(MouseEvent.CLICK, function(e:Event):void{
 				settings.visible =false;
 			});
+			settings.delete_btn.addEventListener(MouseEvent.CLICK, switchToDeleteUser);
+			settings.update_btn.addEventListener(MouseEvent.CLICK, switchToUpdateUser);
 			homestage.addChild(settings);
 			homestage.settings_btn.addEventListener(MouseEvent.CLICK, switchToSettings);
-			browse.settings_btn.addEventListener(MouseEvent.CLICK, switchToSettings);
+			browse.addChild(settings);
 			
 		}
 		
@@ -113,19 +132,32 @@
 			browsepage = new BrowsePage(browse, getUserID());
 			homestage.addChild(browsepage);
 			browsepage.displayWantToWatchMovies(getUserID());
+			browse.settings_btn.addEventListener(MouseEvent.CLICK, switchToSettings);
+			browse.home_btn.addEventListener(MouseEvent.CLICK, goHome);
 		}
 		
 		public function goHome(e:Event){
+			trace('hello?');
 			browsepage.visible = false;
 			cmgsoon.visible = true;
 			boxOffice.visible = true;
 		}
 		
 		public function switchToSettings(e:Event){
-			trace('get here?');
 			settings.visible = true;
 		}
 		
+		public function switchToDeleteUser(e:Event){
+			//trace('get HERE');
+			deletePage = new delete_mc;
+			homestage.addChild(deletePage);
+			
+		}
+		
+		public function switchToUpdateUser(e:Event){
+			updatePage = new update_mc;
+			homestage.addChild(updatePage);
+		}
 
 	}
 }

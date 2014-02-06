@@ -18,10 +18,11 @@ if(isset($_POST['movieId']))
 	$releaseDate = $_POST['releaseDate'];
 	$smallMovieCover = $_POST['smallMovieCover'];
 	$largeMovieCover = $_POST['largeMovieCover'];
+	$tagline - $_POST['consensus'];
 
-		$sql = "INSERT INTO movie(movieID, title, release_date, mpaa_rating,profile_pic,detail_pic,rottentomato_rating,audience_rating)
+		$sql = "INSERT INTO movie(movieID, title, release_date, mpaa_rating,profile_pic,detail_pic,tagline,rottentomato_rating,audience_rating)
 		VALUES ( 
-			$movieId, '{$movieTitle}', '{$releaseDate}', '{$mpaaRating}', '{$smallMovieCover}', '{$largeMovieCover}','{$criticScore}' ,'{$audienceScore}')";
+			$movieId, '{$movieTitle}', '{$releaseDate}', '{$mpaaRating}', '{$smallMovieCover}', '{$largeMovieCover}','{$tagline}','{$criticScore}' ,'{$audienceScore}')";
 
 		$check = mysqli_query($conn, $sql);
 		if($check){

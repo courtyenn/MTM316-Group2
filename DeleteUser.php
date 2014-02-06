@@ -3,21 +3,13 @@
 if(isset($_GET['id'])) 
 { 
  $password = mysql_real_escape_string($_GET['password']);
-} 
-else 
-{ 
-	$password = ' ';
-}
 
-if($password != ' '){
-$query = "DELETE FROM user
+ $query = "DELETE FROM user
 			WHERE id=$id
 			LIMIT 1
-			"; 
-}
+			";   
 
-  
-  $result = mysql_query($query, $connection);
+	$result = mysql_query($query, $connection);
   
   if(!$result){
 	  die("Database query failed: ".mysql_error());
@@ -28,5 +20,13 @@ $query = "DELETE FROM user
   if (isset($connection)){
 		mysql_close($connection);
 }
+} 
+else 
+{ 
+	echo "User not found! WHich is crazy...";
+}
+
+  
+
   
 ?>

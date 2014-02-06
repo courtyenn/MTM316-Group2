@@ -1,2 +1,4 @@
 UserID,MovieID,Note,Rating,isFavorite,hasWatched,wantToWatch,ID,title,director,year,mpaa_rating,profile_pic,detail_pic,budget,revenue,tagline,overview,status,release_date,genres,vote_average,vote_count,imdb_rating,rottentomato_rating,moviedb_rating,audience_rating,trailer_url,movieID
 20|30||0|0|0|1|30|"The Nut Job"|||PG|http://content6.flixster.com/movie/11/17/48/11174840_pro.jpg|http://content6.flixster.com/movie/11/17/48/11174840_det.jpg||||||2014-01-17|||||12||52||771354446
+20|34||0|0|0|1|34|"The Hobbit: The Desolation Of Smaug"|||PG-13|http://content7.flixster.com/movie/11/17/18/11171801_pro.jpg|http://content7.flixster.com/movie/11/17/18/11171801_det.jpg||||||2013-12-13|||||75||85||771315407
+20|39||0|0|0|1|39|"Cloudy with a Chance of Meatballs 2"|||PG|http://content8.flixster.com/movie/11/17/58/11175894_pro.jpg|http://content8.flixster.com/movie/11/17/58/11175894_det.jpg||||||2013-09-27|||||70||66||771271679

@@ -69,6 +69,7 @@
 			
 			register.visible = false;
 			trace(e.target.data);
+			manager.switchToLogin();
 		}
 
 	}

@@ -7,7 +7,7 @@
 	public class Update extends MovieClip {
 		var url:String;
 		var urlVariables:URLVariables = new URLVariables;
-		var path: String = "http://localhost/MTM316-Group2/";
+		var path: String = "http://localhost:1337/code/test/MTM316-Group2/";
 		var updateUrl = new update_mc;
 		var urlRequest: URLRequest; 
 		
