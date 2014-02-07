@@ -30,6 +30,8 @@
 			movieBio.x = 0;
 			movieBio.y = 600;
 			browse.addChild(movieBio);
+			movieBio.criticStars.visible = false;
+			movieBio.audiStars.visible = false;
 			
 		}
 		

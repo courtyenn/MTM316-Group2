@@ -28,11 +28,17 @@
 		public function FlashFlix_Group2Proj()
 		{
 		    
+			
+			
 			boxOffice = new FlashFlixBoxOffice(this);
 			homestage.x = 0;
 			homestage.y = 0;
 			//homestage.settingsmenu_mc.visible = false;
 			addChild(homestage);
+			
+			moviesComingSoon = new ComingSoon(this);
+			
+			//moviesComingSoon.visible = false;
 			
 			signup = new createuser(this);
 			signup.visible = false;
@@ -100,8 +106,12 @@
 			//browsepage = new BrowsePage(this, userid);
 			//browsepage.visible = false;
 			homestage.addChild(cmgsoon);	
+			homestage.addChild(moviesComingSoon);
+			moviesComingSoon.visible = false;
+			moviesComingSoon.movieBio.criticStars.visible = false;
+			moviesComingSoon.movieBio.audiStars.visible = false;
 			homestage.addChild(boxOffice);
-			comingSoonMovies();
+			
 			
 			settings = new settingsmenu_mc;
 			settings.x = 460;
@@ -120,12 +130,7 @@
 			
 		}
 		
-		public function comingSoonMovies(){
-			moviesComingSoon = new ComingSoon(this);
-			homestage.addChild(moviesComingSoon);
-			moviesComingSoon.visible = false;
-			
-		}
+
 		
 		public function getUserID():Number{
 			return userId;
@@ -145,6 +150,8 @@
 			
 			browsePage2.displayWatchedMovies(getUserID());
 			browse2.home_btn.addEventListener(MouseEvent.CLICK, goHome);
+			browse2.settings_btn.addEventListener(MouseEvent.CLICK, switchToSettings);
+			browse2.cmgsoon_btn.addEventListener(MouseEvent.CLICK, switchToComingSoon);
 			//browsepage = new BrowsePage(browse, getUserID());
 			//homestage.addChild(browsepage);
 			
@@ -164,13 +171,14 @@
 			//homestage.addChild(browsepage);
 			browsepage.displayWantToWatchMovies(getUserID());
 			browse.settings_btn.addEventListener(MouseEvent.CLICK, switchToSettings);
+			browse.cmgsoon_btn.addEventListener(MouseEvent.CLICK, switchToComingSoon);
 			browse.home_btn.addEventListener(MouseEvent.CLICK, goHome);
 		}
 		
 		public function goHome(e:Event){
 			//trace('hello?');
 			browsepage.visible = false;
-			browsePage2.visible =false;
+			browsePage2.visible = false;
 			cmgsoon.visible = true;
 			boxOffice.visible = true;
 			moviesComingSoon.visible = false;
@@ -179,10 +187,14 @@
 		public function switchToComingSoon(e:Event){
 			
 			//home_btn.addEventListener(MouseEvent.CLICK, goHome);
+			
 			browsepage.visible = false;
 			browsePage2.visible =false;
-			//cmgsoon.visible = true;
+			boxOffice.visible = false;
+			cmgsoon.visible = true;
+			
 			moviesComingSoon.visible = true;
+			//homestage.cmgsoon.home_btn.addEventListener(MouseEvent.CLICK, goHome);
 		}
 		
 		public function switchToSettings(e:Event){
