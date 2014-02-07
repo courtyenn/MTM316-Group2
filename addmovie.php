@@ -18,18 +18,18 @@ if(isset($_POST['movieId']))
 	$releaseDate = $_POST['releaseDate'];
 	$smallMovieCover = $_POST['smallMovieCover'];
 	$largeMovieCover = $_POST['largeMovieCover'];
-	$tagline - $_POST['consensus'];
+	$tagline =$conn->real_escape_string($_POST['consensus']);
 
-		$sql = "INSERT INTO movie(movieID, title, release_date, mpaa_rating,profile_pic,detail_pic,tagline,rottentomato_rating,audience_rating)
+		$sql = "INSERT INTO movie(movieID, title, release_date, mpaa_rating,profile_pic,detail_pic,tagline,rottentomato_rating,audience_rating, runtime)
 		VALUES ( 
-			$movieId, '{$movieTitle}', '{$releaseDate}', '{$mpaaRating}', '{$smallMovieCover}', '{$largeMovieCover}','{$tagline}','{$criticScore}' ,'{$audienceScore}')";
+			$movieId, '{$movieTitle}', '{$releaseDate}', '{$mpaaRating}', '{$smallMovieCover}', '{$largeMovieCover}','{$tagline}','{$criticScore}' ,'{$audienceScore}', '{$runtime}')";
 
 		$check = mysqli_query($conn, $sql);
 		if($check){
 		echo $movieId . " , " . $movieTitle;
 		}
 		else{
-		echo "connection error";
+		die(mysqli_error($conn));
 		}
 	}
 	else{

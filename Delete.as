@@ -19,7 +19,7 @@
 			deleteUrl.x = 0;
 
 			addChild(deleteUrl);
-			deleteUrl.delete_Btn1.addEventListener(MouseEvent.CLICK, deleteUser);
+			deleteUrl.login_btn.addEventListener(MouseEvent.CLICK, deleteUser);
 		}
 
 		public function deleteUser(e: Event) {

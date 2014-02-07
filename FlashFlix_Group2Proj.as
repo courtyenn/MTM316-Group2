@@ -20,8 +20,10 @@
 		var updateUser:Update;
 		var deletePage:delete_mc;
 		var updatePage:update_mc;
-		
 		var browse:infoPage_mc = new infoPage_mc;
+		var browse2:infoPage_mc = new infoPage_mc;
+		var browsePage2:BrowsePage;
+		
 		public function FlashFlix_Group2Proj()
 		{
 		    
@@ -50,11 +52,22 @@
 			homestage.addChild(updateUser);
 			
 			browse.visible =false;
+			homestage.addChild(browse);
 			//browse.alreadywatched_btn.addEventListener(MouseEvent.CLICK, switchToAlreadyWatched);
 			browse.wantwatch_btn.addEventListener(MouseEvent.CLICK, switchToWantWatch);
+			browse.alreadywatched_btn.addEventListener(MouseEvent.CLICK, switchToAlreadyWatched);
+			browsepage = new BrowsePage(browse);
+			homestage.addChild(browsepage);
+			
+			browse2.visible = false;
+			browsePage2 = new BrowsePage(browse2);
+			browsePage2.visible = false;
+			homestage.addChild(browse2);
+			browse2.alreadywatched_btn.addEventListener(MouseEvent.CLICK, switchToAlreadyWatched);
+			browse2.wantwatch_btn.addEventListener(MouseEvent.CLICK, switchToWantWatch);
+			homestage.addChild(browsePage2);
 			
 			
-			homestage.addChild(browse);
 			
 			var boundary:MovieClip = new boundary_mc;
 			boundary.x = -1430;
@@ -113,31 +126,40 @@
 		
 		public function switchToAlreadyWatched(e:Event){
 			
-			browse.visible = true;
-			//browsepage.displayWatchedMovies(userId);
-			browse.infoTitle_txt.text = "Browse Movies Already Watched";
+			browse.visible = false;
+			browsepage.visible = false;
 			cmgsoon.visible =false;
 			boxOffice.visible = false;
-			browsepage = new BrowsePage(browse, getUserID());
-			homestage.addChild(browsepage);
+			browse2.visible = true;
+			browsePage2.visible =true;
+			
+			browse2.infoTitle_txt.text = "Browse Movies Already Watched";
+			
+			browsePage2.displayWatchedMovies(getUserID());
+			browse2.home_btn.addEventListener(MouseEvent.CLICK, goHome);
+			//browsepage = new BrowsePage(browse, getUserID());
+			//homestage.addChild(browsepage);
 			
 		}
 		
 		public function switchToWantWatch(e:Event){
 			
+			browse2.visible = false;
+			browsePage2.visible =false;
 			browse.visible=true;
 			browse.infoTitle_txt.text = "Browse Movies Want To Watch";
 			cmgsoon.visible =false;
 			boxOffice.visible = false;
-			browsepage = new BrowsePage(browse, getUserID());
-			homestage.addChild(browsepage);
+			browsepage.visible = true;
+			//browsepage = new BrowsePage(browse);
+			//homestage.addChild(browsepage);
 			browsepage.displayWantToWatchMovies(getUserID());
 			browse.settings_btn.addEventListener(MouseEvent.CLICK, switchToSettings);
 			browse.home_btn.addEventListener(MouseEvent.CLICK, goHome);
 		}
 		
 		public function goHome(e:Event){
-			trace('hello?');
+			//trace('hello?');
 			browsepage.visible = false;
 			cmgsoon.visible = true;
 			boxOffice.visible = true;

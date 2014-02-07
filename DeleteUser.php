@@ -25,8 +25,5 @@ else
 { 
 	echo "User not found! WHich is crazy...";
 }
-
-  
-
   
 ?>
