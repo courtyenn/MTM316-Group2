@@ -13,6 +13,7 @@
 		var lastmc:MovieClip;
 		var userId:Number;
 		var boxOffice:FlashFlixBoxOffice;
+		var moviesComingSoon:ComingSoon;
 		var cmgsoon:Homepage;
 		var browsepage:BrowsePage;
 		var settings:settingsmenu_mc;
@@ -74,9 +75,7 @@
 			boundary.y = -1005;
 			addChild(boundary);
 			
-			
 		}
-		
 	
 		
 		public function register(){
@@ -102,6 +101,7 @@
 			//browsepage.visible = false;
 			homestage.addChild(cmgsoon);	
 			homestage.addChild(boxOffice);
+			comingSoonMovies();
 			
 			settings = new settingsmenu_mc;
 			settings.x = 460;
@@ -120,6 +120,13 @@
 			
 		}
 		
+		public function comingSoonMovies(){
+			moviesComingSoon = new ComingSoon(this);
+			homestage.addChild(moviesComingSoon);
+			moviesComingSoon.visible = false;
+			
+		}
+		
 		public function getUserID():Number{
 			return userId;
 		}
@@ -130,6 +137,7 @@
 			browsepage.visible = false;
 			cmgsoon.visible =false;
 			boxOffice.visible = false;
+			moviesComingSoon.visible = false;
 			browse2.visible = true;
 			browsePage2.visible =true;
 			
@@ -150,6 +158,7 @@
 			browse.infoTitle_txt.text = "Browse Movies Want To Watch";
 			cmgsoon.visible =false;
 			boxOffice.visible = false;
+			moviesComingSoon.visible = false;
 			browsepage.visible = true;
 			//browsepage = new BrowsePage(browse);
 			//homestage.addChild(browsepage);
@@ -161,8 +170,19 @@
 		public function goHome(e:Event){
 			//trace('hello?');
 			browsepage.visible = false;
+			browsePage2.visible =false;
 			cmgsoon.visible = true;
 			boxOffice.visible = true;
+			moviesComingSoon.visible = false;
+		}
+		
+		public function switchToComingSoon(e:Event){
+			
+			//home_btn.addEventListener(MouseEvent.CLICK, goHome);
+			browsepage.visible = false;
+			browsePage2.visible =false;
+			//cmgsoon.visible = true;
+			moviesComingSoon.visible = true;
 		}
 		
 		public function switchToSettings(e:Event){
