@@ -3,6 +3,7 @@
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	import flash.events.*;
+	import flash.net.*;
 	import FlashFlixBoxOffice;
 	
 	public class FlashFlix_Group2Proj extends MovieClip
