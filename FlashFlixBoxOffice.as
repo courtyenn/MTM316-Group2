@@ -12,7 +12,7 @@
 	
 	public class FlashFlixBoxOffice extends MovieClip
 	{
-		public static const NUMBER_OF_MOVIES: int = 38;
+		public static const NUMBER_OF_MOVIES: int = 50;
 		
 		//var url: String;
 		//var urlLoader: URLLoader = new URLLoader();
@@ -73,8 +73,11 @@
 		}
 		
 		public function scrollRight(event:Event){
-			movieDisplay.x -=300;
-			
+			if(-(movieDisplay.x - 1400) < (NUMBER_OF_MOVIES * (movieObject.width + 19)))
+			{
+				movieDisplay.x -=300;
+			}
+
 		}
 		
 		public function scrollLeft(event:Event){
@@ -113,6 +116,7 @@
 				movieArray[i].releaseDate = data.movies[i].release_dates.theater;
 				movieArray[i].mpaaRating = data.movies[i].mpaa_rating;
 				movieArray[i].runtime = data.movies[i].runtime;
+
 				movieArray[i].disWatch = movieObject.diswatch2_btn;
 				movieArray[i].disWatch.addEventListener(MouseEvent.CLICK, switchDelete);
 				if(mySharedObject.data.diswatches == null || mySharedObject.data.diswatches == false)
@@ -121,6 +125,7 @@
 				if(mySharedObject.data.dislikes == null || mySharedObject.data.dislikes == false)
 				movieArray[i].disLike.visible = false;
 				movieArray[i].disLike.addEventListener(MouseEvent.CLICK, switchDelete);
+
 				//movieArray[i].theaterDate = data.movies[i].release_dates.theater.slice(0,4);
 				movieObject.x = 20+(19 + movieObject.width) * i;
 				movieObject.y = 100;
