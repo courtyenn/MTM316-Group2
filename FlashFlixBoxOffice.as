@@ -258,24 +258,12 @@
 			passOMDB(e.target.movieTitle, e.target.releaseDate.slice(0,4));
 			
 			movieBio.movieTitle.text = e.target.movieTitle + " ("+ e.target.releaseDate + ")";
-			movieBio.criticConsensus.text = e.target.criticConsensus;			movieBio.criticScore.text = "Critic Score: "+e.target.criticScore+"%";
+			movieBio.criticsConsensus.text = e.target.criticConsensus;			movieBio.criticScore.text = "Critic Score: "+e.target.criticScore+"%";
 			movieBio.audienceScore.text = "Audience Score: "+e.target.audienceScore+"%";
 			movieBio.mpaaRating.text = e.target.mpaaRating;
 			movieBio.runtime.text = e.target.runtime+" minutes";
 			
-			/*
-			criticStarChart = new starMeter;
 			
-			criticStarChart.x = 1000;
-			//criticStarChart.y = 700;
-			movieBio.addChild(criticStarChart);
-			
-			audiStarChart = new starMeter;
-			
-			audiStarChart.x = 1000;
-			audiStarChart.y = 750;
-			movieBio.addChild(audiStarChart);
-			*/
 			movieBio.criticStars.visible = true;
 			movieBio.audiStars.visible = true;
 			
