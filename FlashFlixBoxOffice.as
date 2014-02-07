@@ -284,6 +284,7 @@
 			//trace(e.target.parent.smallMovieCover);
 
 			MovieManager.getInstance().addMWantWatch(manager.getUserID(), e.target.parent);
+			//MovieManager.getInstance().updateWantToWatch(manager.getUserID(), e.target.parent.movieid, 'wantToWatch');
 			//MovieManager.getInstance().addMWantWatch(manager.getUserID(), e.target.parent.movieid);
 		}
 		public function alreadyWatched(e:Event):void{

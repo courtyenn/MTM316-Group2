@@ -2,23 +2,22 @@
 
 if(isset($_GET['id'])) 
 { 
- $password = mysql_real_escape_string($_GET['password']);
+$id = mysqli_real_escape_string($conn, $_GET['id']);
 
- $query = "DELETE FROM user
-			WHERE id=$id
-			LIMIT 1
-			";   
+ //$id = $conn->real_escape_string($_GET['id']);
 
-	$result = mysql_query($query, $connection);
+ $query = "DELETE FROM `user` WHERE `ID`=$id LIMIT 1";   
+
+	$result = mysqli_query($conn, $query);
   
   if(!$result){
-	  die("Database query failed: ".mysql_error());
+	  die("Database query failed: ".mysqli_error($conn));
   }else{
 	echo "Record deleted.";  
   }
   
-  if (isset($connection)){
-		mysql_close($connection);
+  if (isset($conn)){
+		mysqli_close($conn);
 }
 } 
 else 

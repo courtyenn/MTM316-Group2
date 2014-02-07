@@ -23,26 +23,45 @@
 		}
 
 		public function deleteUser(e: Event) {
-			var password1 = deleteUrl.username_txt.text;
-			var password2 = deleteUrl.password_txt.text;
+			trace('get HERE NOW');
+			var password1 = deleteUrl.password1.text;
+			var password2 = deleteUrl.password2.text;
 
 			if (password1 == password2) {
-				trace("user deleted");
-				url = path + "deleteuser.php";
-				urlRequest = new URLRequest(url);
+			
+			trace("deleting...");
+			
+			url = path + "DeleteUser.php";
 
-				var requestVars: URLVariables = new URLVariables();
-				requestVars.id = manager.getUserID();
-
-				trace(url);
-				urlRequest.data = urlVariables;
-				sendToURL(urlRequest);
+			var request:URLRequest = new URLRequest(url);
+			request.method = URLRequestMethod.GET;
+			//var loader:URLLoader = new URLLoader();
+			//loader.dataFormat = URLLoaderDataFormat.VARIABLES.toUpperCase();
+			
+			var requestVars:URLVariables = new URLVariables();
+			requestVars.id = manager.getUserID();
+			//requestVars.password = pass;
+			
+			request.data = requestVars;
+			
+			var loader:URLLoader = new URLLoader(request);
+			
+			//trace(url);
+			
+			
+			loader.addEventListener(Event.COMPLETE, onDeleteComplete);
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			loader.load(request);
 
 			}
 			else{
 				trace("Passwords do not match.");
 			}
 
+		}
+		
+		public function onDeleteComplete(e:Event){
+			trace(e.target.data);
 		}
 
 	}

@@ -203,9 +203,10 @@
 		}
 		
 		public function switchToDeleteUser(e:Event){
-			//trace('get HERE');
-			deletePage = new delete_mc;
-			homestage.addChild(deletePage);
+			trace('get HERE');
+			deleteUser.visible = true;
+			//deletePage = new delete_mc;
+			homestage.addChild(deleteUser);
 			
 		}
 		

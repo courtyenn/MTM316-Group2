@@ -10,6 +10,7 @@ if(isset($_POST['movieId']))
 	$isFavorite = !empty($_POST['isFavorite']) ? 1 : 0;
 	$hasWatched = !empty($_POST['hasWatched']) ? 1 : 0;
 	$wantToWatch = !empty($_POST['wantToWatch']) ? 1 : 0;
+
 	$query =  "SELECT * FROM `movie` WHERE `movieId` = '$movieId'";
 	$checkquery = mysqli_query($conn,$query);
 	$check = mysqli_fetch_assoc($checkquery);
@@ -28,7 +29,7 @@ $movieQuery = mysqli_query($conn, $mquery);
 			echo $MovieID . " : " . $userId . " added!";
 		}
 		else{
-			die(mysqli_error($conn));
+			die(mysqli_error($conn) + " anddd movie:" + $movieId + " : " + $userId);
 		}
 
 	}
@@ -56,6 +57,8 @@ $movieQuery = mysqli_query($conn, $mquery);
 			echo "sql error at HAS WATCHED";
 		}
 	}
+
+	echo $MovieID;
 
 
 }

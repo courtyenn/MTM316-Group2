@@ -52,25 +52,26 @@
 		}
 		
 		public function addMWatched(userId:Number,movie:movieObject_mc){			
-			addMovie(movie);
+			addMovie(movie, userId);
 			updateWantToWatch(userId, movie.movieid, 'hasWatched');
 		}
 		
 		public function addMWantWatch(userId:Number, movie:movieObject_mc){
 			//trace(movie.movieTitle);
-			addMovie(movie);
+			addMovie(movie, userId);
 			updateWantToWatch(userId, movie.movieid, 'wantToWatch');
 		}
 		
-		public function addMovie(movie:movieObject_mc){
+		public function addMovie(movie:movieObject_mc, userId:Number){
 			url = path + "addmovie.php";
-
+			trace(url + " lloooook");
 			var request:URLRequest = new URLRequest(url);
 			request.method = URLRequestMethod.POST;
 			//var loader:URLLoader = new URLLoader();
 			//loader.dataFormat = URLLoaderDataFormat.VARIABLES.toUpperCase();
 			//trace(movie.runtime + " look here");
 			var requestVars:URLVariables = new URLVariables();
+			requestVars.userId = userId;
 			requestVars.movieId = movie.movieid;
 			requestVars.mpaaRating = movie.mpaaRating;
 			requestVars.movieTitle = movie.movieTitle;
@@ -100,6 +101,7 @@
 			var request:URLRequest = new URLRequest(url);
 			request.method = URLRequestMethod.POST;
 			
+			trace(userId + " : " + movieId);
 			var requestVars:URLVariables = new URLVariables();
 			requestVars.movieId = movieId;
 			requestVars.userId = userId;
@@ -109,10 +111,14 @@
 			request.data = requestVars;
 			
 			var loader:URLLoader = new URLLoader(request);
-			//trace(url);
+			loader.addEventListener(Event.COMPLETE, loaded);
 			loader.dataFormat = URLLoaderDataFormat.TEXT;
 			loader.load(request);
 		}
+		
+			public function loaded(e:Event){
+				trace(e.target.data);
+			}
 		
 		public function deleteMovie(deleteVar:String, movieId:Number){
 			url = path + "deletemovie.php";
