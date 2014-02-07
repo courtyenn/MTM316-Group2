@@ -7,12 +7,12 @@
 	import flash.events.MouseEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	import flash.net.SharedObject;
+	
 	import FlashFlix_Group2Proj;
 	
 	public class FlashFlixBoxOffice extends MovieClip
 	{
-		public static const NUMBER_OF_MOVIES: int = 50;
+		public static const NUMBER_OF_MOVIES: int = 38;
 		
 		//var url: String;
 		//var urlLoader: URLLoader = new URLLoader();
@@ -29,8 +29,8 @@
 		var movieObject: MovieClip;
 		var startNumber:int = 4;
 		var manager:FlashFlix_Group2Proj;
-		var diswatch:diswatch_btn = new diswatch_btn;
-		var mySharedObject:SharedObject = SharedObject.getLocal("flashflix");
+		var criticStarChart:MovieClip;
+		var audiStarChart:MovieClip;
 				
 		
 		public function FlashFlixBoxOffice(proj:FlashFlix_Group2Proj)
@@ -45,6 +45,13 @@
 			movieBio.x = 0;
 			movieBio.y = 600;
 			addChild(movieBio);
+			
+			movieBio.criticStars.gotoAndStop(1);
+			movieBio.audiStars.gotoAndStop(1);
+			
+			movieBio.criticStars.visible=false;
+			movieBio.audiStars.visible = false;
+			
 			leftButton = new leftButton_mc();
 			leftButton.y = ydistance;
 			addChild(leftButton);
@@ -73,11 +80,8 @@
 		}
 		
 		public function scrollRight(event:Event){
-			if(-(movieDisplay.x - 1400) < (NUMBER_OF_MOVIES * (movieObject.width + 19)))
-			{
-				movieDisplay.x -=300;
-			}
-
+			movieDisplay.x -=300;
+			
 		}
 		
 		public function scrollLeft(event:Event){
@@ -116,17 +120,14 @@
 				movieArray[i].releaseDate = data.movies[i].release_dates.theater;
 				movieArray[i].mpaaRating = data.movies[i].mpaa_rating;
 				movieArray[i].runtime = data.movies[i].runtime;
-
-				movieArray[i].disWatch = movieObject.diswatch2_btn;
-				movieArray[i].disWatch.addEventListener(MouseEvent.CLICK, switchDelete);
-				if(mySharedObject.data.diswatches == null || mySharedObject.data.diswatches == false)
-				movieArray[i].disWatch.visible = false;
-				movieArray[i].disLike = movieObject.dislike2_btn;
-				if(mySharedObject.data.dislikes == null || mySharedObject.data.dislikes == false)
-				movieArray[i].disLike.visible = false;
-				movieArray[i].disLike.addEventListener(MouseEvent.CLICK, switchDelete);
-
-				//movieArray[i].theaterDate = data.movies[i].release_dates.theater.slice(0,4);
+				movieArray[i].cast = "";
+				
+				//trace(data.movies[i].abridged_cast.length);
+				for(var j:int = 0;j < data.movies[i].abridged_cast.length; j++)
+				{
+					movieArray[i].cast += data.movies[i].abridged_cast[j].name + ", ";
+				}
+				
 				movieObject.x = 20+(19 + movieObject.width) * i;
 				movieObject.y = 100;
 				//movieDisplay.x = 20+(19 + movieObject.width) * i;
@@ -170,24 +171,9 @@
 			}
 		}
 		
-		public function switchDelete(e:Event){
-			trace(e.target.parent.movieTitle);
-			if(e.target.name == "dislike2_btn"){
-				mySharedObject.data.dislikes = false;
-				mySharedObject.flush();
-				MovieManager.getInstance().deleteMovie('hasWatched', e.target.parent.movieid);
-			}
-			else if(e.target.name == "diswatch2_btn"){
-				mySharedObject.data.diswatches = false;
-				mySharedObject.flush();
-				MovieManager.getInstance().deleteMovie('wantToWatch',e.target.parent.movieid);
-			}
-			e.target.visible = false;
-			
-		}
-		
-	/*	function passOMDB(movieName:String, theaterDate:String)
+		function passOMDB(movieName:String, theaterDate:String)
 		{
+			
 			var urlRequest: String = "http://www.omdbapi.com/?t="+movieName+"&y="+theaterDate;
 			var loader: URLLoader = new URLLoader();
 			
@@ -200,24 +186,33 @@
 			{
 				trace("Cannot load : " + error.message);
 			}
-		}*/
+		}
 
-	/*	function loadingOMBDData(e:Event):void
+		function loadingOMBDData(e:Event):void
 		{
 			var stringJSON: String;
 			stringJSON = String(e.target.data);
 			
 			var data: Object = JSON.parse(stringJSON);
 			
-			//trace(arraySpace);
-			//textbox = data.Metascore;
-			//textbox2 == data.imdbRating;
+			trace(stringJSON);
+			
 			if(data.Metascore != "" || data.Metascore != null)
 			{
-				//homePage.movieBio.metaCritic.text = data.Metascore;
-				//homePage.movieBio.imdbRating.text = data.imdbRating;
+				trace(data.Metascore);
+				if(!data.Metascore)
+				{
+					trace("Error");
+					movieBio.metaScore.text = "Metacritic score: N/A";
+					movieBio.imdbScore.text = "IMDB Score: N/A";
+				}
+				else
+				{
+					movieBio.metaScore.text = "Metacritic score: " + data.Metascore;
+					movieBio.imdbScore.text = "IMDB Score: " + data.imdbRating;
+				}
 			}
-		}*/
+		}
 		
 		public function movieClick(e:Event): void {
 			//trace(e.target.movieTitle);
@@ -225,17 +220,35 @@
 			MovieManager.getInstance();
 			my_loader.load(new URLRequest(e.target.largeMovieCover));
 			
-			//passOMDB(e.target.movieTitle, e.target.theaterDate);
+			passOMDB(e.target.movieTitle, e.target.releaseDate.slice(0,4));
 			
 			movieBio.movieTitle.text = e.target.movieTitle + " ("+ e.target.releaseDate + ")";
-			movieBio.criticConsensus.text = e.target.criticConsensus;
+			movieBio.criticsConsensus.text = e.target.criticConsensus;
 			movieBio.criticScore.text = "Critic Score: "+e.target.criticScore+"%";
 			movieBio.audienceScore.text = "Audience Score: "+e.target.audienceScore+"%";
 			movieBio.mpaaRating.text = e.target.mpaaRating;
 			movieBio.runtime.text = e.target.runtime+" minutes";
-			/*movieBio.releaseDate.text = "Release Date: "+e.target.releaseDate;
-			movieBio.mpaaRating.text = "MPAA Rating: "+e.target.mpaaRating;
-			movieBio.runtime.text = "Runtime: "+e.target.runtime+" minutes";*/
+			
+			/*
+			criticStarChart = new starMeter;
+			
+			criticStarChart.x = 1000;
+			//criticStarChart.y = 700;
+			movieBio.addChild(criticStarChart);
+			
+			audiStarChart = new starMeter;
+			
+			audiStarChart.x = 1000;
+			audiStarChart.y = 750;
+			movieBio.addChild(audiStarChart);
+			*/
+			movieBio.criticStars.visible = true;
+			movieBio.audiStars.visible = true;
+			
+			movieBio.criticStars.gotoAndStop(e.target.criticScore);
+			movieBio.audiStars.gotoAndStop(e.target.audienceScore);
+			
+			
 			my_loader.x = 50;
 			my_loader.y = 20;
 			movieBio.addChild(my_loader);
@@ -243,19 +256,13 @@
 		
 		public function wantToWatch(e:Event):void {
 			trace("I want to watch this");
-			mySharedObject.data.dislikes = true;
-			e.target.parent.disLike.visible = true;
-			mySharedObject.flush();
-			//trace(e.target.parent.smallMovieCover);
+			trace(e.target.parent.smallMovieCover);
 			MovieManager.getInstance().addMWantWatch(manager.getUserID(), e.target.parent);
 			//MovieManager.getInstance().addMWantWatch(manager.getUserID(), e.target.parent.movieid);
 		}
 		public function alreadyWatched(e:Event):void{
 			trace("I've already watched this, lets rate it");
-			mySharedObject.data.diswatches = true;
-			mySharedObject.flush();
-			e.target.parent.disWatch.visible = true;
-			MovieManager.getInstance().addMWatched(manager.getUserID(),e.target.parent);
+			MovieManager.getInstance().addMWatched(manager.getUserID(),e.target.parent.movieid);
 		}
 	}
 }
