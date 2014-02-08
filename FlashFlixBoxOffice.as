@@ -272,7 +272,7 @@
 			
 			
 			my_loader.x = 50;
-			my_loader.y = 20;
+			my_loader.y = 40;
 			movieBio.addChild(my_loader);
 		}
 		
